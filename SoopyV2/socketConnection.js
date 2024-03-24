@@ -7,6 +7,8 @@ class SoopyV2Server extends WebsiteCommunicator {
     constructor() {
         super(socketData.serverNameToId.soopyv2);
 
+
+
         this.errorsToReport = [];
 
         this.lbdatathing = undefined;
@@ -52,12 +54,14 @@ class SoopyV2Server extends WebsiteCommunicator {
             id: uuid,
             itemData: json
         });
+
     }
 
     joinApiQ() {
         this.sendData({
             type: "apiready"
         });
+
     }
 
     respondQueue(id, data) {
@@ -80,6 +84,9 @@ class SoopyV2Server extends WebsiteCommunicator {
         if (data.type === "cD") {
             if (global.soopyv2featuremanagerthing && global.soopyv2featuremanagerthing.features.cosmetics) global.soopyv2featuremanagerthing.features.cosmetics.class.cosmeticsDataFromUser(data.p, data.c, data.d);
         }
+
+
+
         if (data.type === "playerStatsQuick") {
             if (this.onPlayerStatsLoaded) this.onPlayerStatsLoaded(data.data);
         }
@@ -110,6 +117,8 @@ class SoopyV2Server extends WebsiteCommunicator {
                 cookieLeaderboard: data.cookieLeaderboard,
                 clickingNow: data.clickingNow
             };
+
+
             this.cookieDataUpdated = Date.now();
         }
         if (data.type === "joinEventResult") {
@@ -135,11 +144,13 @@ class SoopyV2Server extends WebsiteCommunicator {
 
     onConnect() {
         if (this.reportErrorsSetting && !this.reportErrorsSetting.getValue()) return;
+
         this.errorsToReport.forEach((data) => {
             this.sendData({
                 type: "error",
                 data: data
             });
+
         });
         this.errorsToReport = [];
     }
@@ -149,14 +160,17 @@ class SoopyV2Server extends WebsiteCommunicator {
             type: "cosmeticSettings",
             data: data
         });
+
     }
 
     sendCosmeticsData(cosmeticId, data) {
+
         this.sendData({
             type: "cD",
             c: cosmeticId,
             d: data
         });
+
     }
 
     pingSeesUser(uuid) {
@@ -164,9 +178,19 @@ class SoopyV2Server extends WebsiteCommunicator {
             type: "cP",
             p: uuid
         });
+
     }
 
+
+
+
+
+
+
+
+
     reportError(error, description) {
+
         return;
         if (this.reportErrorsSetting && !this.reportErrorsSetting.getValue()) return;
         let data = {
@@ -178,6 +202,7 @@ class SoopyV2Server extends WebsiteCommunicator {
             modVersion: metadata.version,
             modVersionId: metadata.versionId
         };
+
 
         if (this.connected && this.reportErrorsSetting) {
             this.sendData({
@@ -196,6 +221,7 @@ class SoopyV2Server extends WebsiteCommunicator {
             uuid: uuid,
             username: username
         });
+
     }
 
     requestPlayerStatsCache(uuid, username) {
@@ -204,6 +230,7 @@ class SoopyV2Server extends WebsiteCommunicator {
             uuid: uuid,
             username: username
         });
+
     }
 
     sendDungeonData(names, data) {
@@ -212,6 +239,7 @@ class SoopyV2Server extends WebsiteCommunicator {
             names: names,
             data: data
         });
+
     }
 
     sendDungeonData2(names, data) {
@@ -220,6 +248,7 @@ class SoopyV2Server extends WebsiteCommunicator {
             names: names,
             data: data
         });
+
     }
 
     sendSlayerSpawnData(data) {
@@ -228,6 +257,7 @@ class SoopyV2Server extends WebsiteCommunicator {
             data: data,
             name: ChatLib.removeFormatting(Player.getDisplayName().text.split("]")[1]?.trim?.() || Player.getDisplayName().text)
         });
+
     }
     sendInquisData(data) {
         this.sendData({
@@ -235,6 +265,7 @@ class SoopyV2Server extends WebsiteCommunicator {
             data: data,
             name: ChatLib.removeFormatting(Player.getDisplayName().text.split("]")[1]?.trim?.() || Player.getDisplayName().text)
         });
+
     }
 
     sendVancData(data) {
@@ -243,6 +274,7 @@ class SoopyV2Server extends WebsiteCommunicator {
             data: data,
             name: ChatLib.removeFormatting(Player.getDisplayName().text.split("]")[1]?.trim?.() || Player.getDisplayName().text)
         });
+
     }
 
     setServer(server, area, areaFine) {
@@ -252,14 +284,17 @@ class SoopyV2Server extends WebsiteCommunicator {
             area,
             areaFine
         });
+
     }
 
     cookiesGained(amount) {
         this.cookieCount += amount;
+
         this.sendData({
             type: "cookies",
             amount: amount
         });
+
     }
 
     joinEvent(code) {
@@ -267,12 +302,14 @@ class SoopyV2Server extends WebsiteCommunicator {
             type: "joinEvent",
             code
         });
+
     }
 
     pollEventData() {
         this.sendData({
             type: "eventData"
         });
+
     }
 
     pollEventCode(code) {
@@ -280,6 +317,7 @@ class SoopyV2Server extends WebsiteCommunicator {
             type: "pollEvent",
             code
         });
+
     }
 
     sendCHEventData(event, started) {
@@ -288,11 +326,14 @@ class SoopyV2Server extends WebsiteCommunicator {
             event,
             started
         });
+
     }
 }
 
+
 if (!global.soopyV2Server) {
     global.soopyV2Server = new SoopyV2Server;
+
     register("gameUnload", () => {
         global.soopyV2Server = undefined;
     });

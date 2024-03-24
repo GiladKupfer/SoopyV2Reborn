@@ -1,3 +1,4 @@
+import { addSyncedCoord, testConnection } from "../features/waypoints/gcw.js";
 const { default: renderBeaconBeam2 } = require("../../BeaconBeam/index");
 const numberUtils = require("./numberUtils");
 const { default: RenderLib2D } = require("./renderLib2d");
@@ -7,12 +8,16 @@ if (!GlStateManager) {
     var GlStateManager = Java.type("net.minecraft.client.renderer.GlStateManager");
 }
 let ret = {
+
+
+
+
+
+
     HSVtoRGB: function (h, s, v) {
         var r, g, b, i, f, p, q, t;
         if (arguments.length === 1) {
-            s = h.s;
-            v = h.v; 
-            h = h.h;
+            s = h.s, v = h.v, h = h.h;
         }
         i = Math.floor(h * 6);
         f = h * 6 - i;
@@ -36,6 +41,7 @@ let ret = {
 
     },
     drawLine: function (x, y, z, x2, y2, z2, r, g, b, thickness = 1) {
+
         GL11.glBlendFunc(770, 771);
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glLineWidth(thickness);
@@ -45,9 +51,12 @@ let ret = {
         GlStateManager.func_179094_E();
 
         Tessellator.begin(GL11.GL_LINE_STRIP).colorize(r, g, b);
+
         Tessellator.pos(x, y, z);
         Tessellator.pos(x2, y2, z2);
+
         Tessellator.draw();
+
 
         GlStateManager.func_179121_F();
         GL11.glEnable(GL11.GL_TEXTURE_2D);
@@ -56,6 +65,7 @@ let ret = {
         GL11.glDisable(GL11.GL_BLEND);
     },
     drawLineWithDepth: function (x, y, z, x2, y2, z2, r, g, b, t = 1) {
+
         GL11.glBlendFunc(770, 771);
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glLineWidth(t);
@@ -64,9 +74,12 @@ let ret = {
         GlStateManager.func_179094_E();
 
         Tessellator.begin(GL11.GL_LINE_STRIP).colorize(r, g, b);
+
         Tessellator.pos(x, y, z);
         Tessellator.pos(x2, y2, z2);
+
         Tessellator.draw();
+
 
         GlStateManager.func_179121_F();
         GL11.glEnable(GL11.GL_TEXTURE_2D);
@@ -88,9 +101,12 @@ let ret = {
         GL11.glDisable(GL11.GL_BLEND);
     },
     drawLineSmall: function (x, y, z, x2, y2, z2, r, g, b) {
+
         Tessellator.begin(GL11.GL_LINE_STRIP).colorize(r, g, b);
+
         Tessellator.pos(x, y, z);
         Tessellator.pos(x2, y2, z2);
+
         Tessellator.draw();
     },
     drawLinePoints: function (locations, r, g, b, thickness = 1, phase = false) {
@@ -103,15 +119,17 @@ let ret = {
         GlStateManager.func_179094_E();
 
         Tessellator.begin(GL11.GL_LINE_STRIP).colorize(r, g, b);
+
         locations.forEach((loc) => {
             Tessellator.pos(...loc);
         });
+
         Tessellator.draw();
+
 
         GlStateManager.func_179121_F();
         GL11.glEnable(GL11.GL_TEXTURE_2D);
         GL11.glDepthMask(true);
-
         if (phase) GL11.glEnable(GL11.GL_DEPTH_TEST);
         GL11.glDisable(GL11.GL_BLEND);
     },
@@ -129,6 +147,7 @@ let ret = {
         h += 0.01;
 
         Tessellator.begin(GL11.GL_LINE_STRIP).colorize(colorR, colorG, colorB, a);
+
         Tessellator.pos(x + w, y + h, z + w);
         Tessellator.pos(x + w, y + h, z);
         Tessellator.pos(x, y + h, z);
@@ -148,6 +167,7 @@ let ret = {
         Tessellator.pos(x, y, z + w);
         Tessellator.pos(x, y + h, z + w);
         Tessellator.pos(x + w, y + h, z + w);
+
         Tessellator.draw();
 
         GlStateManager.func_179121_F();
@@ -155,6 +175,7 @@ let ret = {
         GL11.glDisable(GL11.GL_BLEND);
     },
     drawBoxAtBlock: function (x, y, z, colorR, colorG, colorB, w = 1, h = 1, a = 1) {
+
         GL11.glBlendFunc(770, 771);
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glLineWidth(3);
@@ -163,7 +184,9 @@ let ret = {
         GL11.glDepthMask(false);
         GlStateManager["func_179094_E"]();
 
+
         Tessellator.begin(GL11.GL_LINE_STRIP).colorize(colorR, colorG, colorB, a);
+
         Tessellator.pos(x + w, y + h, z + w);
         Tessellator.pos(x + w, y + h, z);
         Tessellator.pos(x, y + h, z);
@@ -183,6 +206,7 @@ let ret = {
         Tessellator.pos(x, y, z + w);
         Tessellator.pos(x, y + h, z + w);
         Tessellator.pos(x + w, y + h, z + w);
+
         Tessellator.draw();
 
         GlStateManager["func_179121_F"]();
@@ -192,6 +216,7 @@ let ret = {
         GL11.glDisable(GL11.GL_BLEND);
     },
     drawRect: function (x, y, z, colorR, colorG, colorB, xW, zW, h, a = 1) {
+
         GL11.glBlendFunc(770, 771);
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glLineWidth(3);
@@ -200,7 +225,9 @@ let ret = {
         GL11.glDepthMask(false);
         GlStateManager["func_179094_E"]();
 
+
         Tessellator.begin(GL11.GL_LINE_STRIP).colorize(colorR, colorG, colorB, a);
+
         Tessellator.pos(x + xW, y + h, z + zW);
         Tessellator.pos(x + xW, y + h, z);
         Tessellator.pos(x, y + h, z);
@@ -220,6 +247,7 @@ let ret = {
         Tessellator.pos(x, y, z + zW);
         Tessellator.pos(x, y + h, z + zW);
         Tessellator.pos(x + xW, y + h, z + zW);
+
         Tessellator.draw();
 
         GlStateManager["func_179121_F"]();
@@ -229,6 +257,7 @@ let ret = {
         GL11.glDisable(GL11.GL_BLEND);
     },
     drawBoxAtBlock2: function (x, y, z, colorR, colorG, colorB, w = 1, h = 1, a = 1) {
+
         GL11.glBlendFunc(770, 771);
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glLineWidth(3);
@@ -237,9 +266,12 @@ let ret = {
         GL11.glDepthMask(false);
         GlStateManager["func_179094_E"]();
 
+
         Tessellator.begin(GL11.GL_LINE_STRIP).colorize(colorR, colorG, colorB, a);
+
         x -= w / 2;
         z -= w / 2;
+
         Tessellator.pos(x + w, y + h, z + w);
         Tessellator.pos(x + w, y + h, z);
         Tessellator.pos(x, y + h, z);
@@ -259,6 +291,7 @@ let ret = {
         Tessellator.pos(x, y, z + w);
         Tessellator.pos(x, y + h, z + w);
         Tessellator.pos(x + w, y + h, z + w);
+
         Tessellator.draw();
 
         GlStateManager["func_179121_F"]();
@@ -279,6 +312,7 @@ let ret = {
             width = width / 2;
         }
 
+
         GL11.glBlendFunc(770, 771);
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glLineWidth(lineWidth);
@@ -286,7 +320,9 @@ let ret = {
         GL11.glDisable(GL11.GL_TEXTURE_2D);
         GlStateManager.func_179094_E();
 
+
         Tessellator.begin(GL11.GL_LINE_STRIP).colorize(colorR, colorG, colorB, 1);
+
         Tessellator.pos(x + width, y + height, z + width);
         Tessellator.pos(x + width, y + height, z - width);
         Tessellator.pos(x - width, y + height, z - width);
@@ -306,6 +342,7 @@ let ret = {
         Tessellator.pos(x - width, y, z + width);
         Tessellator.pos(x - width, y + height, z + width);
         Tessellator.pos(x + width, y + height, z + width);
+
         Tessellator.draw();
 
         GlStateManager.func_179121_F();
@@ -333,8 +370,10 @@ let ret = {
         }
 
         w /= 2;
+
         Tessellator.begin(GL11.GL_QUADS, false);
         Tessellator.colorize(red, green, blue, alpha);
+
         Tessellator.translate(x, y, z).
             pos(w, 0, w).
             pos(w, 0, -w).
@@ -385,14 +424,23 @@ let ret = {
         renderBeaconBeam2(x, y, z, r, g, b, alpha, !phase);
     },
     drawCoolWaypoint(x, y, z, r, g, b, { name = "", showDist = !!name, phase = false, renderBeacon = true }) {
+        
+        // testConnection(name + ": " + x + " " + y + " " + z);
+        // addSyncedCoord(name, x, y, z); // add the coord
         let distToPlayerSq = (x - Player.getRenderX()) ** 2 + (y - (Player.getRenderY() + Player.getPlayer()["func_70047_e"]())) ** 2 + (z - Player.getRenderZ()) ** 2;
+
         let alpha = Math.min(1, Math.max(0, 1 - (distToPlayerSq - 10000) / 12500));
 
         ret[phase ? "drawBoxAtBlock" : "drawBoxAtBlockNotVisThruWalls"](x - 0.005, y - 0.005, z - 0.005, r, g, b, 1.01, 1.01, alpha);
         ret.drawFilledBox(x + 0.5, y, z + 0.5, 1.02, 1.01, r, g, b, 0.25 * alpha, phase);
-        if (renderBeacon) renderBeaconBeam2(x, y + 1, z, r, g, b, Math.min(1, Math.max(0, (distToPlayerSq - 25) / 100)) * alpha, !phase);
+        if (renderBeacon) {
+            addSyncedCoord(name, x, y, z); // add the coord
+            // testConnection(name + ": " + x + " " + y + " " + z);
+            renderBeaconBeam2(x, y + 1, z, r, g, b, Math.min(1, Math.max(0, (distToPlayerSq - 25) / 100)) * alpha, !phase);
+        }
 
         if (name || showDist) {
+
             let distToPlayer = Math.sqrt(distToPlayerSq);
 
             let distRender = Math.min(distToPlayer, 50);
@@ -405,5 +453,6 @@ let ret = {
         }
     }
 };
+
 
 module.exports = ret;

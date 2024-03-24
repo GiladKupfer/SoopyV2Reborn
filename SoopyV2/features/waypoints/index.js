@@ -1,6 +1,4 @@
 
-
-
 import Feature from "../../featureClass/class";
 import { Waypoint } from "../../utils/renderJavaUtils";
 import { drawCoolWaypoint, drawLine } from "../../utils/renderUtils";

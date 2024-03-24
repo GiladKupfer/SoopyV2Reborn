@@ -1,5 +1,6 @@
 import socketData from "../../../soopyApis/socketData";
 import WebsiteCommunicator from "../../../soopyApis/websiteCommunicator";
+// import { testConnection } from "../../gcw";
 
 class MineWayPointsServer extends WebsiteCommunicator {
     constructor() {
@@ -19,6 +20,7 @@ class MineWayPointsServer extends WebsiteCommunicator {
             case "setLocation":
                 if (this.setLocationHandler) {
                     this.setLocationHandler(data.area, data.location);
+                    // testConnection(data.area + data.location)
                 }
                 break;
         }
@@ -26,6 +28,7 @@ class MineWayPointsServer extends WebsiteCommunicator {
     }
 
     setLocation(area, loc) {
+
         this.sendData({
             type: "setLocation",
             area: area,

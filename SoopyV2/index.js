@@ -1,3 +1,8 @@
+
+
+// index.js 
+
+import { gcwTest, registerGCWClearCommand, registerGCWCommand } from './features/waypoints/gcw.js';
 import NonPooledThread from "./utils/nonPooledThread.js";
 
 if (net.minecraftforge.fml.common.Loader.isModLoaded("soopyv2forge")) {
@@ -5,6 +10,7 @@ if (net.minecraftforge.fml.common.Loader.isModLoaded("soopyv2forge")) {
         while (!Java.type("me.soopyboo32.soopyv2forge.SoopyV2Forge").INSTANCE) {
             Thread.sleep(1000);
         }
+
         Java.type("me.soopyboo32.soopyv2forge.SoopyV2Forge").INSTANCE.soopyIsInstalled();
     }).start();
 }
@@ -12,12 +18,17 @@ if (net.minecraftforge.fml.common.Loader.isModLoaded("soopyv2forge")) {
 class SoopyAddons {
     constructor() {
         this.FeatureManager = require("./featureClass/featureManager.js");
+
         this.FeatureManager.parent = this;
     }
 }
 
+gcwTest();
+registerGCWCommand();
+registerGCWClearCommand();
 
 let a = register("worldLoad", () => {
     new SoopyAddons;
+
     a.unregister();
 });
