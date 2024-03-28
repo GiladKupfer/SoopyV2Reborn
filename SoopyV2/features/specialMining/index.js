@@ -9,6 +9,7 @@ import TextSetting from "../settings/settingThings/textSetting";
 import { drawBoxAtBlock, drawFilledBox } from "../../utils/renderUtils";
 import RenderLib2D from "../../utils/renderLib2d";
 import { testConnection } from "../waypoints/gcw";
+import { clearCoords } from "../waypoints/gcw";
 
 
 class PowderAndScatha extends Feature {
@@ -155,6 +156,7 @@ class PowderAndScatha extends Feature {
                 this.dPowder = 0;
                 if (!this.inCrystalHollows() && this.resetPowderWhenLeaveCH.getValue()) {
                     this.resetMiningData("powder");
+                    clearCoords();
                     this.chests.clear();
                 }
                 if (this.inCrystalHollows()) {

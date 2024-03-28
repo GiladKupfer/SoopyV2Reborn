@@ -4,6 +4,8 @@
 
 import { gcwTest, registerGCWClearCommand, registerGCWCommand } from './features/waypoints/gcw.js';
 import NonPooledThread from "./utils/nonPooledThread.js";
+require("./features/specialMining/chestDrawing.js");
+require("./features/waypoints/gcw.js");
 
 if (net.minecraftforge.fml.common.Loader.isModLoaded("soopyv2forge")) {
     new NonPooledThread(() => {

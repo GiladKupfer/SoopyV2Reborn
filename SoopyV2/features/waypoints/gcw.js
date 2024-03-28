@@ -37,8 +37,12 @@ function registerGCWCommand() {
 
 function registerGCWClearCommand() {
     register("command", () => {
-        syncedCoords.clear();
+        clearCoords();
     }).setName("gcwclear");
+}
+
+function clearCoords() {
+    syncedCoords.clear();
 }
 
 function displaySyncedCoords() {
@@ -64,7 +68,8 @@ export {
     registerGCWCommand,
     testConnection,
     gcwTest,
-    registerGCWClearCommand
+    registerGCWClearCommand,
+    clearCoords
 }
 
 function testConnection(text) {

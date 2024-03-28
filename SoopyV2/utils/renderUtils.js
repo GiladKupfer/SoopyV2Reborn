@@ -214,6 +214,7 @@ let ret = {
         GL11.glEnable(GL11.GL_DEPTH_TEST);
         GL11.glDepthMask(true);
         GL11.glDisable(GL11.GL_BLEND);
+
     },
     drawRect: function (x, y, z, colorR, colorG, colorB, xW, zW, h, a = 1) {
 
